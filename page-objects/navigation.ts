@@ -9,8 +9,7 @@ export class Navigation extends HelperBase{
     }
 
     /**
-     * Function that clicks on login and registration in navigation bar
-     * @param page 
+     * * Function that clicks on login and registration in navigation bar
      */
     async RegisterPage(){
         // * Locators

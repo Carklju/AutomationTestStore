@@ -12,22 +12,12 @@ export class LoginAndRegisterPage extends HelperBase{
     }
 
     /**
-     * * Function that registers user with radnom valid credential and choose weather to include some fileds or not
-     * @param firstName - change to false in test if you want to exclude that value from test
-     * @param lastName - change to false in test if you want to exclude that value from test
-     * @param email - change to false in test if you want to exclude that value from test
-     * @param company - change to false in test if you want to exclude that value from test
-     * @param addressPrimary - change to false in test if you want to exclude that value from test
-     * @param city - change to false in test if you want to exclude that value from test
-     * @param zipCode - change to false in test if you want to exclude that value from test
-     * @param loginName - change to false in test if you want to exclude that value from test
-     * @param password - change to false in test if you want to exclude that value from test
-     * @param passwordConfirm - change to false in test if you want to exclude that value from test
+     * * Function that registers user with random valid credentials
      */
     async RegisterWithAllCredentialsAndChecks(){
         //Calling create random user function 
         const user = await this.createRandomUser()
-        //Entering all credentials
+        //Filling input fields with data from user.json
         await this.page.locator('#AccountFrm_firstname').fill(user[0].firstName)
         await this.page.locator('#AccountFrm_lastname').fill(user[0].lastName)
         await this.page.locator('#AccountFrm_email').fill(user[0].email)
@@ -51,19 +41,20 @@ export class LoginAndRegisterPage extends HelperBase{
     }
 
     /**
-     * Function which fills input fields however we want
-     * @param firstName 
-     * @param lastName 
-     * @param email 
-     * @param company 
-     * @param addressPrimary 
-     * @param city 
-     * @param zipCode 
-     * @param loginName 
-     * @param password 
-     * @param passwordConfirm 
+     * * Function which fills input fields with custom data, including empty fileds
+     * @param firstName - First name of a user
+     * @param lastName - Last name of a user
+     * @param email - Email of a user
+     * @param company - Company where user works
+     * @param addressPrimary - Primary address of a user
+     * @param city - City where user leaves
+     * @param zipCode - ZIP/Postal code of a city where user lives
+     * @param loginName - Users login name
+     * @param password - Password 
+     * @param passwordConfirm - Repeat above password (optional)
      */
     async RegisterWithEmptyOrModifiedFields(firstName: string, lastName: string, email: string, company: string, addressPrimary: string, city: string, zipCode: string, loginName: string, password: string, passwordConfirm: string){
+        //If field is not undefined (empty string) fill that data to input field
         if(firstName !== undefined){
             await this.page.locator('#AccountFrm_firstname').fill(firstName)
         }
