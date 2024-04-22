@@ -1,11 +1,11 @@
-import { Page, expect } from '@playwright/test'
-import {HelperBase} from './helperBase'
-import links from '../data/links.json'
+import { Page } from '@playwright/test'
 
-export class Navigation extends HelperBase{
+export class Navigation{
+
+    private readonly page: Page
 
     constructor(page: Page){
-        super(page)
+        this.page = page
     }
 
     /**

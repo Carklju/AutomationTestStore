@@ -5,10 +5,12 @@ import { count } from 'console';
 import fs from 'fs'
 import { json } from 'stream/consumers';
 
-export class LoginAndRegisterPage extends HelperBase{
+export class LoginAndRegisterPage{
+
+    private readonly page: Page
 
     constructor(page: Page){
-        super(page)
+        this.page = page
     }
 
     /**
