@@ -159,4 +159,15 @@ export class LoginAndRegisterPage{
     //return user with all data
     return user
     }
+
+    async assertZIPCode(){
+        //Text content of alert box
+        const alertText = await this.page.getByText(' Zip/postal code must be between 3 and 10 characters!').first().textContent()
+        //Text content of error message below ZIP Code input
+        const alertHelpBlock = await this.page.getByText('Zip/postal code must be between 3 and 10 characters!', { exact: true }).textContent()
+        //Assert that in alert box it displays right text
+        expect(alertText?.replace('×', '')).toContain('Zip/postal code must be between 3 and 10 characters!')
+        //Assert that below ZIP Code input is displayed error message
+        expect(alertHelpBlock).toContain('Zip/postal code must be between 3 and 10 characters!')
+    }
 }
