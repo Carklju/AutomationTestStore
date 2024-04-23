@@ -18,6 +18,11 @@ test.describe('registration', () =>{
     test('user registration with unfilled ZIP CODE', async({page}) => {
         //Register using custom values
         await pm.loginAndRegister().RegisterWithEmptyOrModifiedFields("Test", "Test", "test12312412@test.com", "Test", "Test", "", "TeestAleksa", "test", "test")
-        await pm.loginAndRegister().assertZIPCode()
+        const alertText =  await pm.loginAndRegister().getAlertText()
+        //Assert that in alert box it displays right text
+        expect(alertText?.replace('×', '')).toContain('Zip/postal code must be between 3 and 10 characters!')
+        const alertHelpBlock = await pm.loginAndRegister().getAlertHelpBlock()
+        //Assert that below ZIP Code input is displayed error message
+        expect(alertHelpBlock).toContain('Zip/postal code must be between 3 and 10 characters!')
     })
 })
