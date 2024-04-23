@@ -3,9 +3,10 @@ import {PageManager} from "../page-objects/pageManager"
 
 
 test.describe('registration', () =>{
+    let pm: any
     test.beforeEach( async({page}) =>{
         //Instance of Page Manager Class
-        const pm = new PageManager(page)
+        pm = new PageManager(page)
         //Go to Automation Test Store Website
         await page.goto('https://automationteststore.com/')
         //Click on the Login/register in navigation bar
@@ -15,7 +16,6 @@ test.describe('registration', () =>{
     })
     
     test('user registration using valid credentials', async({page}) =>{
-        const pm = new PageManager(page)
         //Register using all valid credentials
         await pm.loginAndRegister().RegisterWithAllCredentialsAndChecks()
         //Assert that account has been created
