@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@2captcha/captcha-solver": "^1.0.0",
     "playwright": "^1.43.1",
     "playwright-extra": "^4.3.6",
     "puppeteer": "^22.7.0",
