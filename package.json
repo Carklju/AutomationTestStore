@@ -1,6 +1,10 @@
 {
   "dependencies": {
-    "playwright": "^1.43.1"
+    "playwright": "^1.43.1",
+    "playwright-extra": "^4.3.6",
+    "puppeteer": "^22.7.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
