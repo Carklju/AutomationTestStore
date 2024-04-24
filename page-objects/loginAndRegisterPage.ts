@@ -1,8 +1,6 @@
 import { Page, expect } from '@playwright/test'
 import { faker } from '@faker-js/faker';
-import { count } from 'console';
 import fs from 'fs'
-import { json } from 'stream/consumers';
 
 export class LoginAndRegisterPage{
 

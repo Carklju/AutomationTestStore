@@ -3,7 +3,7 @@ import {PageManager} from "../page-objects/pageManager"
 
 
 test.describe('registration', () =>{
-    let pm:any
+    let pm: any
     test.beforeEach( async({page}) =>{
         //Instance of Page Manager Class
         pm = new PageManager(page)
