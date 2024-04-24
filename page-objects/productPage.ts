@@ -54,7 +54,7 @@ export class ProductPage{
     }
     /**
      * Function that fills review form
-     * @param stars 
+     * @param stars - number of stars for review
      */
     async fillWriteReview(stars: string){
         //Select star based on number of stars provided in paramethers
@@ -67,25 +67,26 @@ export class ProductPage{
         await this.page.locator('#text').fill(reviewText)
         //click on the submit button
         await this.page.getByRole('button', {name: " Submit"}).click()
+        //return object with name and review keys with fullName and reviewText values
         return {
-            first: fullName,
-            second: reviewText
+            name: fullName,
+            review: reviewText
         }
     }
-
+    //Get star locator
     async getStars(stars: string){
         return this.page.locator('a').getByText(stars)
     }
-
+    //Get locator for name input field
     async getName(){
-        return this.page.locator('#name').textContent()
+        return this.page.locator('#name')
     }
-
+    //Get locator for review input field
     async getReview(){
         return this.page.locator('#text')
     }
-
+    //Get locator for error message
     async getAlertHumanVerification(){
-        return this.page.locator('.alert alert-error alert-danger')
+        return this.page.getByText('Human verification has failed! Please try again.')
     }
 }

@@ -11,13 +11,17 @@ test.describe('review', () => {
     })
 
     test('add review to a product in special section', async({page}) =>{
-       await pm.productsPage().selectProductFromSection("Absolute Anti-Age Spot Replenishing Unifying TreatmentSPF 15","latest")
-       const value = await pm.productsPage().fillWriteReview('3')
-       const nameText = await pm.productsPage().getName()
-       const reviewText = await pm.productsPage().getReview()
-       const alertText = await pm.productsPage().getAlertHumanVerification()
-       await expect(nameText).toHaveText(value.first)
-       await expect(reviewText).toContainText(value.second)
-       await expect(alertText).toHaveText(alertText)
+        //Selecting product and going to its review
+        await pm.productsPage().selectProductFromSection("Absolute Anti-Age Spot Replenishing Unifying TreatmentSPF 15","latest")
+        //Filling review form and return fullName and review text from input fields
+        const value = await pm.productsPage().fillWriteReview('3')
+        //Calling functions to get locators for assertion
+        const nameText = await pm.productsPage().getName()
+        const reviewText = await pm.productsPage().getReview()
+        const alertText = await pm.productsPage().getAlertHumanVerification()
+        //Assertion
+        await expect(nameText).toHaveValue(value.name)
+        await expect(reviewText).toHaveValue(value.review)
+        await expect(alertText).toHaveText('×Human verification has failed! Please try again.')
     })
 })
