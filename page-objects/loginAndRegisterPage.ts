@@ -44,7 +44,6 @@ export class LoginAndRegisterPage{
      * @param firstName - First name of a user
      * @param lastName - Last name of a user
      * @param email - Email of a user
-     * @param company - Company where user works
      * @param addressPrimary - Primary address of a user
      * @param city - City where user leaves
      * @param zipCode - ZIP/Postal code of a city where user lives
@@ -52,7 +51,7 @@ export class LoginAndRegisterPage{
      * @param password - Password 
      * @param passwordConfirm - Repeat above password (optional)
      */
-    async RegisterWithEmptyOrModifiedFields(firstName: string, lastName: string, email: string, company: string, addressPrimary: string, city: string, zipCode: string, loginName: string, password: string, passwordConfirm: string){
+    async RegisterWithEmptyOrModifiedFields(firstName: string, lastName: string, email: string, addressPrimary: string, city: string, zipCode: string, loginName: string, password: string, passwordConfirm: string){
         //If field is not undefined (empty string) fill that data to input field
         if(firstName !== undefined){
             await this.page.locator('#AccountFrm_firstname').fill(firstName)
@@ -62,9 +61,6 @@ export class LoginAndRegisterPage{
         }
         if(email !== undefined){
             await this.page.locator('#AccountFrm_email').fill(email)
-        }
-        if(company !== undefined){
-            await this.page.locator('#AccountFrm_company').fill(company)
         }
         if(addressPrimary !== undefined){
             await this.page.locator('#AccountFrm_address_1').fill(addressPrimary)
@@ -84,6 +80,10 @@ export class LoginAndRegisterPage{
         if(passwordConfirm !== undefined){
             await this.page.locator('#AccountFrm_confirm').fill(passwordConfirm)
         }
+        //Select region from dropdown
+        const regionDropdown = this.page.locator('#AccountFrm_zone_id')
+        await regionDropdown.click()
+        const regionOption = await regionDropdown.selectOption({label: 'Angus'})
         //Click on privacy policy checkbox
         const privacyPolicy = this.page.locator('#AccountFrm_agree')
         await privacyPolicy.click()
@@ -156,5 +156,21 @@ export class LoginAndRegisterPage{
     fs.writeFile(filePath, userJSON, err => {})
     //return user with all data
     return user
+    }
+
+    /**
+     * * Function that returns text content of locator for Alert Text Zip Code error message
+     * @returns 
+     */
+    async getAlertText(){
+        return await this.page.getByText(' Zip/postal code must be between 3 and 10 characters!').first().textContent()
+    }
+
+    /**
+     * * Function that returns text content of locator for error message below ZIP Code input field
+     * @returns 
+     */
+    async getAlertHelpBlock(){
+        return await this.page.getByText('Zip/postal code must be between 3 and 10 characters!', { exact: true }).textContent()
     }
 }
