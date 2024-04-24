@@ -1,4 +1,4 @@
-import { Page, expect, test } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 import { PageManager } from '../page-objects/pageManager'
 
 test.describe('review', () => {
