@@ -1,8 +1,6 @@
 import { Page, expect } from '@playwright/test'
 import { faker } from '@faker-js/faker';
-import { count } from 'console';
 import fs from 'fs'
-import { json } from 'stream/consumers';
 
 export class LoginAndRegisterPage{
 
@@ -158,5 +156,21 @@ export class LoginAndRegisterPage{
     fs.writeFile(filePath, userJSON, err => {})
     //return user with all data
     return user
+    }
+
+    /**
+     * * Function that returns text content of locator for Alert Text Zip Code error message
+     * @returns 
+     */
+    async getAlertText(){
+        return await this.page.getByText(' Zip/postal code must be between 3 and 10 characters!').first().textContent()
+    }
+
+    /**
+     * * Function that returns text content of locator for error message below ZIP Code input field
+     * @returns 
+     */
+    async getAlertHelpBlock(){
+        return await this.page.getByText('Zip/postal code must be between 3 and 10 characters!', { exact: true }).textContent()
     }
 }
