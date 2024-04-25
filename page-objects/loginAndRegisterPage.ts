@@ -149,7 +149,7 @@ export class LoginAndRegisterPage{
             }
         ] 
     //Converting user to JSON value
-    const filePath = '/Users/ivicamacbook/Desktop/ALEKSA/AutomationTestStore/AutomationTestStoreInternship/data/user.json'
+    const filePath = 'data/user.json'
     //raw.push(user)
     const userJSON = JSON.stringify(user, null, 4)
     //Writing userJSON to user.json file { flag: 'a+' },

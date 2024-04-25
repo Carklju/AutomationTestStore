@@ -1,6 +1,7 @@
 import { Page } from '@playwright/test'
 import { Navigation  } from './navigation.ts'
 import { LoginAndRegisterPage } from './loginAndRegisterPage.ts'
+import { MyProfilePage } from './myProfilePage.ts'
 import { ProductPage  } from './productPage.ts'
 
 /**
@@ -11,6 +12,7 @@ export class PageManager{
     private readonly page: Page
     private readonly navigation: Navigation
     private readonly loginAndRegisterPage: LoginAndRegisterPage
+    private readonly myProfilePage: MyProfilePage
     private readonly productPage: ProductPage
 
     constructor(page: Page){
@@ -18,6 +20,7 @@ export class PageManager{
         this.navigation = new Navigation(this.page)
         this.loginAndRegisterPage = new LoginAndRegisterPage(this.page)
         this.productPage = new ProductPage(this.page)
+        this.myProfilePage = new MyProfilePage(this.page)
     }
     /**
      * * Function that returns navigation class
@@ -33,6 +36,10 @@ export class PageManager{
      */
     loginAndRegister(){
         return this.loginAndRegisterPage
+    }
+
+    onMyProfilePage(){
+        return this.myProfilePage
     }
 
     productsPage(){

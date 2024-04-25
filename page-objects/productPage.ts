@@ -16,7 +16,7 @@ export class ProductPage{
      */
     async selectProductFromSection(productTitle: any, sectionTitle: string){
         //read sections.json file where are ids for all sections
-        let sectionsJSON = fs.readFileSync('/Users/ivicamacbook/Desktop/ALEKSA/AutomationTestStore/AutomationTestStoreInternship/data/sections.json', 'utf-8')
+        let sectionsJSON = fs.readFileSync('data/sections.json', 'utf-8')
         //parse it into sections variable
         let sections = JSON.parse(sectionsJSON)
         //loop thourgh sections
