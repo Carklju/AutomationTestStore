@@ -17,7 +17,10 @@ test.describe('add product to cart', () => {
     test('add multiple products to cart and check their total and sub-total', async({page}) => {
         await pm.navigateTo().HomePage()
         await pm.onAddToCartPage().addProductToCart('Skinsheen Bronzer Stick', 'featured', 3)
-    })
-    
+        await pm.navigateTo().HomePage()
+        await pm.onAddToCartPage().addProductToCart('Absolute Anti-Age Spot Replenishing Unifying TreatmentSPF 15', 'latest', 2)
+        const totalPrice = await pm.onAddToCartPage().getTotalPrice()
+        await expect(totalPrice).toBeVisible()
+    })  
 })
 

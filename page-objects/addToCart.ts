@@ -1,6 +1,6 @@
-import { Page, expect } from '@playwright/test'
+import { Page } from '@playwright/test'
 import fs from 'fs'
-
+import { ProductPage } from './productPage'
 export class AddToCartPage{
 
     private readonly page: Page
@@ -9,9 +9,15 @@ export class AddToCartPage{
         this.page = page
     }
 
+    /**
+     * Function that find certain product and adds it to cart given times
+     * @param productTitle - title of the section
+     * @param sectionTitle - title of the section
+     * @param quantityClick - number of times to add in cart
+     */
     async addProductToCart(productTitle: string, sectionTitle: string, quantityClick: number){
         //read sections.json file where are ids for all sections
-        let sectionsJSON = fs.readFileSync('/Users/ivicamacbook/Desktop/ALEKSA/AutomationTestStore/AutomationTestStoreInternship/data/sections.json', 'utf-8')
+        let sectionsJSON = fs.readFileSync('data/sections.json', 'utf-8')
         //parse it into sections variable
         let sections = JSON.parse(sectionsJSON)
         //loop thourgh sections
@@ -21,28 +27,69 @@ export class AddToCartPage{
                 //scroll to the section
                 await this.page.locator(`${sections[section]}`).scrollIntoViewIfNeeded()
                 //call writeData function to get div text
-                let element = await this.writeData(sectionTitle, productTitle)
-                //hover over certain product 
+                const productPage = new ProductPage(this.page)
+                //let element = await this.writeData(sectionTitle, productTitle)
+                let element = await productPage.writeData(sectionTitle, productTitle)
+                //Click on the add to cart given nubmer of times
                 for(let i = 0; i < quantityClick; i++){
+                    //click on add to cart
                     await this.page.locator(`${sections[section]} > .thumbnails > ${element} > .thumbnail > .pricetag > a`).click()
                 }
-                const addedToCart = this.page.locator(`${sections[section]} > .thumbnails > ${element} > .thumbnail > .pricetag > .quick_basket`).getByTitle('Added to cart')
-                //await addedToCart.scrollIntoViewIfNeeded()
+                //get price for that product
+                const unitPrice: any = await this.page.locator(`${sections[section]} > .thumbnails > ${element} > .thumbnail > .pricetag.added_to_cart > .price > .oneprice`).textContent()
+                //Price formatted
+                const unitPriceFormatted: any = parseFloat(unitPrice?.replace(/^(-)|[^0-9.,]+/g, '')).toFixed(2)
+                //Locator for Added to Cart
+                const addedToCart = this.page.locator(`${sections[section]} > .thumbnails > ${element} > .thumbnail > .pricetag.added_to_cart > .quick_basket > a`).last()
+                //Click on added to cart
                 await addedToCart.click()
+                //Get price * quantity (total price)
+                const priceMultiplied = await this.checkPriceCalculation(quantityClick, unitPriceFormatted)
+                const priceUnitTable = await this.page.locator('tr > td.align_right').getByText(`$${unitPriceFormatted}`).textContent()
+                const quantityTable = parseInt(await this.page.locator(`tr > td > div > input[value="${quantityClick}"]`).inputValue())
+                if(priceUnitTable === unitPrice && quantityTable === quantityClick){
+                    const totalPriceTable = this.page.locator('tr > td.align_right').getByText(`$${priceMultiplied}`)
+                    return totalPriceTable
+                }
+
             }
         }
+       
     }
 
-    async writeData(sectionTitle: string, productTitle: string){
-        //create string array that consists out of products in certain section
-        let productArray = (await this.page.locator(`#${sectionTitle} .prdocutname`).allTextContents())
-        //find element that matches productTitle 
-        const elements = (element:string) => element === productTitle
-        //find what is the index of that element in array
-        const nthValue = productArray.findIndex(elements)
-        //create string where nth-value if index of that element + 1
-        const divText = `div:nth-child(${nthValue + 1})`
-        //return that string
-        return divText
+    /**
+     * Function that checks if calculation of Sub-total and total is good
+     * @returns true if calculation is good and bad if calculation is bad
+     */
+    async checkPriceCalculation(quantity: number, unitPriceFormatted: any){
+        const price = quantity * unitPriceFormatted
+        return price.toFixed(2)
+    }
+
+    async getTotalPriceAPI(){
+        const responsePrice = await this.page.waitForResponse('https://automationteststore.com/index.php?rt=r/checkout/cart/recalc_totals')
+        const responsePriceBody = await responsePrice.json()
+
+        const subTotalPriceAPI = responsePriceBody.totals[0].value
+        const shippingPriceAPI = responsePriceBody.totals[1].value
+        const totalPriceAPI = responsePriceBody.totals[2].value
+
+        const subTotalPriceAPIText = responsePriceBody.totals[0].text
+        const shippingPriceAPIText = responsePriceBody.totals[1].text
+        const totalPriceAPIText = responsePriceBody.totals[2].text
+
+    }
+
+    async getTotalPrice(){
+        const subTotal:any = await this.page.locator('#totals_table > tbody > tr > td').nth(1).locator('span').textContent()
+        const subTotalFormatted = parseFloat(subTotal?.replace(/^(-)|[^0-9.,]+/g, '')).toFixed(2)
+        const flatShippingRate:any = await this.page.locator('#totals_table > tbody > tr > td').nth(3).locator('span').textContent()
+        const flatShippingRateFormatted = parseFloat(flatShippingRate?.replace(/^(-)|[^0-9.,]+/g, '')).toFixed(2)
+        const totalPrice  = this.page.locator('#totals_table > tbody > tr > td').nth(5)
+        const total: any = await totalPrice.locator('span').textContent()
+        const totalPriceFormatted = parseFloat(total?.replace(/^(-)|[^0-9.,]+/g, '')).toFixed(2)
+        if(subTotalFormatted + flatShippingRateFormatted === totalPriceFormatted){
+            return totalPrice
+        }
     }
 }
