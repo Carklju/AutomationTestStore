@@ -26,6 +26,9 @@ export class AddToCartPage{
                 for(let i = 0; i < quantityClick; i++){
                     await this.page.locator(`${sections[section]} > .thumbnails > ${element} > .thumbnail > .pricetag > a`).click()
                 }
+                const addedToCart = this.page.locator(`${sections[section]} > .thumbnails > ${element} > .thumbnail > .pricetag > .quick_basket`).getByTitle('Added to cart')
+                //await addedToCart.scrollIntoViewIfNeeded()
+                await addedToCart.click()
             }
         }
     }

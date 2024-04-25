@@ -14,7 +14,10 @@ test.describe('add product to cart', () => {
          //Register using all valid credentials
         await pm.loginAndRegister().RegisterWithAllCredentialsAndChecks()
     })
-
+    test('add multiple products to cart and check their total and sub-total', async({page}) => {
+        await pm.navigateTo().HomePage()
+        await pm.onAddToCartPage().addProductToCart('Skinsheen Bronzer Stick', 'featured', 3)
+    })
     
 })
 
