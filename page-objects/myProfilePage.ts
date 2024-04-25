@@ -16,7 +16,7 @@ export class MyProfilePage{
      */
     async changePassword(){
         //Read json
-        let userJSON = fs.readFileSync('/Users/ivicamacbook/Desktop/ALEKSA/AutomationTestStore/AutomationTestStoreInternship/data/user.json', 'utf-8')
+        let userJSON = fs.readFileSync('data/user.json', 'utf-8')
         //Parse user.json
         let user = JSON.parse(userJSON)
         //Fills current password with password from user.json
