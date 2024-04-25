@@ -1,6 +1,7 @@
 import { Page } from '@playwright/test'
 import { Navigation  } from './navigation.ts'
 import { LoginAndRegisterPage } from './loginAndRegisterPage.ts'
+import { MyProfilePage } from './myProfilePage.ts'
 
 /**
  * * Class that help us group all of classes into one for easier managing of classes
@@ -10,11 +11,13 @@ export class PageManager{
     private readonly page: Page
     private readonly navigation: Navigation
     private readonly loginAndRegisterPage: LoginAndRegisterPage
+    private readonly myProfilePage: MyProfilePage
 
     constructor(page: Page){
         this.page = page
         this.navigation = new Navigation(this.page)
         this.loginAndRegisterPage = new LoginAndRegisterPage(this.page)
+        this.myProfilePage = new MyProfilePage(this.page)
     }
     /**
      * * Function that returns navigation class
@@ -30,6 +33,10 @@ export class PageManager{
      */
     loginAndRegister(){
         return this.loginAndRegisterPage
+    }
+
+    onMyProfilePage(){
+        return this.myProfilePage
     }
 
 }
