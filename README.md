@@ -7,32 +7,22 @@ Follow next steps to create them:
 ```json
 [
     {
-        "firstName": "Walton",
-        "lastName": "Haag",
-        "email": "Walton819@test.com",
-        "telephone": "810.526.7629 x4739",
-        "fax": "953-727-6347 x7965",
-        "company": "Purdy - Jones",
-        "addressPrimary": "54926 Considine Haven",
-        "addressSecondary": "Suite 891",
-        "city": "Beavercreek",
-        "country": "United Kingdom",
-        "region": "Angus",
-        "zipCode": "9204734587",
-        "loginName": "Ericka.Ullrich7",
-        "password": "x9ZniTvOuyYcbG2",
-        "passwordConfirm": "x9ZniTvOuyYcbG2"
+        "firstName": "[]",
+        "lastName": "[]",
+        "email": "[]",
+        "telephone": "[]",
+        "fax": "[]",
+        "company": "[]",
+        "addressPrimary": "[]",
+        "addressSecondary": "[]",
+        "city": "[]",
+        "country": "[]",
+        "region": "[]",
+        "zipCode": "[]",
+        "loginName": "[]",
+        "password": "[]",
+        "passwordConfirm": "[]"
     }
 ]
 ```
 
-3. Inside of the folder **data** create **sections.json** file with following strucutre and data:
-
-```json
-{
-    "featured":"#block_frame_featured_1769",
-    "latest":"#block_frame_latest_1770",
-    "bestsellers":"#block_frame_bestsellers_1771",
-    "special":"#block_frame_special_1772"
-}
-```
