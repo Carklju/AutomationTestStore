@@ -4,7 +4,7 @@ Follow next steps to create them:
     1. In Root of the project create folder with the name **data**
     2. Inside of the folder **data** create **user.json** file with following strucutre and data:
 
-    ```bash
+    ```json
     [
         {
             "firstName": "Walton",
@@ -28,7 +28,7 @@ Follow next steps to create them:
 
     3. Inside of the folder **data** create **sections.json** file with following strucutre and data:
 
-    ```bash
+    ```json
     {
         "featured":"#block_frame_featured_1769",
         "latest":"#block_frame_latest_1770",
