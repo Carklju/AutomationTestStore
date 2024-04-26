@@ -3,7 +3,6 @@ import { PageManager } from "../page-objects/pageManager"
 
 test.describe('add product to cart', () => {
     let pm: any
-
     test.beforeEach( async({page}) => {
          //Instance of Page Manager Class
          pm = new PageManager(page)
@@ -15,12 +14,26 @@ test.describe('add product to cart', () => {
         await pm.loginAndRegister().RegisterWithAllCredentialsAndChecks()
     })
     test('add multiple products to cart and check their total and sub-total', async({page}) => {
+        //Navigate to Home Page
         await pm.navigateTo().HomePage()
-        await pm.onAddToCartPage().addProductToCart('Skinsheen Bronzer Stick', 'featured', 3)
+        //Add product to cart
+        const subTotalFirstProduct = await pm.onAddToCartPage().addProductToCart('Skinsheen Bronzer Stick', 'featured', 3)
+        //Assertion for subtotal price
+        await expect(async () => {
+            expect(subTotalFirstProduct.totalPriceText).toBe(subTotalFirstProduct.totalPrice)
+          }).toPass()
+        //Navigate to Home Page
         await pm.navigateTo().HomePage()
-        await pm.onAddToCartPage().addProductToCart('Absolute Anti-Age Spot Replenishing Unifying TreatmentSPF 15', 'latest', 2)
-        const totalPrice = await pm.onAddToCartPage().getTotalPrice()
-        await expect(totalPrice).toBeVisible()
+        //Add second product to cart
+        const subTotalSecondProduct = await pm.onAddToCartPage().addProductToCart('Absolute Anti-Age Spot Replenishing Unifying TreatmentSPF 15', 'latest', 2)
+        //Assertion for subtotal price
+        await expect(async () => {
+            expect(subTotalSecondProduct.totalPriceText).toBe(subTotalSecondProduct.totalPrice)
+          }).toPass()
+        //Call total price function to get total price
+        const totalAssert = await pm.onAddToCartPage().getTotalPrice()
+        //Assert that total price locator have correct text
+        await expect(totalAssert.totalLocator).toHaveText(totalAssert.totalText)
     })  
 })
 
