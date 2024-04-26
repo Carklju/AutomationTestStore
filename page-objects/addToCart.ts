@@ -71,15 +71,6 @@ export class AddToCartPage{
     }
 
     /**
-     * Function that checks if calculation of Sub-total and total is good
-     * @returns true if calculation is good and bad if calculation is bad
-     */
-    async checkPriceCalculation(quantity: number, unitPriceFormatted: any){
-        const price = quantity * unitPriceFormatted
-        return price.toFixed(2)
-    }
-
-    /**
      * Function that gets sub-total price and flat shipping rate format them, summarize
      * @returns total price locator and total price text
      */
