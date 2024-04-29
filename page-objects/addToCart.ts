@@ -61,8 +61,6 @@ export class AddToCartPage{
                     await addedToCart.click()
                     //Call getValuesFromCheckoutTable function
                     let noHrefValuesFromTable = await this.getValuesFromCheckoutTable(productTitle)
-                    // console.log('Funkcija: ', noHrefValuesFromTable?.totalPriceText)
-                    // console.log('Funkcija: ', noHrefValuesFromTable?.totalPrice)
                     return{
                         totalPriceText: noHrefValuesFromTable?.totalPriceText,
                         totalPrice: noHrefValuesFromTable?.totalPrice
