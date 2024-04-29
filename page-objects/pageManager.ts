@@ -24,6 +24,7 @@ export class PageManager{
         this.addProductToCart = new AddToCartPage(this.page)
         this.myProfilePage = new MyProfilePage(this.page)
         this.productPage = new ProductPage(this.page)
+        this.myProfilePage = new MyProfilePage(this.page)
     }
     /**
      * * Function that returns navigation class
@@ -48,6 +49,7 @@ export class PageManager{
     onAddToCartPage(){
         return this.addProductToCart
     }
+  
     onMyProfilePage(){
         return this.myProfilePage
     }
