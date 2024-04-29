@@ -17,7 +17,7 @@ test.describe('add product to cart', () => {
         //Navigate to Home Page
         await pm.navigateTo().HomePage()
         //Add product to cart
-        const subTotalFirstProduct = await pm.onAddToCartPage().addProductToCart('Skinsheen Bronzer Stick', 'featured', 3)
+        let subTotalFirstProduct = await pm.onAddToCartPage().addProductToCart('Skinsheen Bronzer Stick', 'featured', 3)
         //Assertion for subtotal price
         await expect(async () => {
             expect(subTotalFirstProduct.totalPriceText).toBe(subTotalFirstProduct.totalPrice)
@@ -25,7 +25,7 @@ test.describe('add product to cart', () => {
         //Navigate to Home Page
         await pm.navigateTo().HomePage()
         //Add second product to cart
-        const subTotalSecondProduct = await pm.onAddToCartPage().addProductToCart('Absolute Anti-Age Spot Replenishing Unifying TreatmentSPF 15', 'latest', 2)
+        let subTotalSecondProduct = await pm.onAddToCartPage().addProductToCart('Absolute Anti-Age Spot Replenishing Unifying TreatmentSPF 15', 'latest', 2)
         //Assertion for subtotal price
         await expect(async () => {
             expect(subTotalSecondProduct.totalPriceText).toBe(subTotalSecondProduct.totalPrice)

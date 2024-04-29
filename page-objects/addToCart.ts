@@ -60,7 +60,9 @@ export class AddToCartPage{
                     //Click on added to cart
                     await addedToCart.click()
                     //Call getValuesFromCheckoutTable function
-                    const noHrefValuesFromTable = await this.getValuesFromCheckoutTable(productTitle)
+                    let noHrefValuesFromTable = await this.getValuesFromCheckoutTable(productTitle)
+                    // console.log('Funkcija: ', noHrefValuesFromTable?.totalPriceText)
+                    // console.log('Funkcija: ', noHrefValuesFromTable?.totalPrice)
                     return{
                         totalPriceText: noHrefValuesFromTable?.totalPriceText,
                         totalPrice: noHrefValuesFromTable?.totalPrice
@@ -106,10 +108,11 @@ export class AddToCartPage{
      * @returns Total price text from table and total price got from quantity * price per unit
      */
     async getValuesFromCheckoutTable(productTitle: string){
+        await this.page.waitForURL('https://automationteststore.com/index.php?rt=checkout/cart')
         //Locator for all rows in checkout table
-        const row = this.page.locator('.table.table-striped.table-bordered tbody').locator('tr')
+        let row = this.page.locator('.table.table-striped.table-bordered tbody').locator('tr')
         //Get count of rows
-        const rowCount = await row.count()
+        let rowCount = await row.count()
         //New empty array for product information array
         let productArray = new Array()
         //New empty array for qunatity input value
